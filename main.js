@@ -36,7 +36,7 @@ function displayLoadPhone(phone) {
 
 // search handle
 
-const searchHandle = ()=>{
+const searchHandle =()=>{
   const searchField = document.getElementById('search-field')
  
   const searchFieldValue = searchField.value
@@ -46,10 +46,6 @@ const searchHandle = ()=>{
 
 }
 
-
-
-
-
-// loadPhone()
+loadPhone()
 
 
