@@ -1,9 +1,9 @@
 
-const loadPhone = async (searchText,isShowAll) => {
+const loadPhone = async (searchText = '13' ,isShowAll) => {
   const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
   const data = await res.json()
   const phones = data.data
-  console.log(data.data);
+  // console.log(data.data);
   displayLoadPhone(phones,isShowAll);
 }
 
@@ -21,7 +21,7 @@ const displayLoadPhone = (phone,isShowAll) => {
     showAllContainer.classList.add('hidden')
   }
 
-  console.log('isshow all' , isShowAll);
+  // console.log('isshow all' , isShowAll);
 
   if(!isShowAll){
     phone = phone.slice(0, 12)
@@ -29,7 +29,7 @@ const displayLoadPhone = (phone,isShowAll) => {
 
 
   phone.forEach(phone => {
-    console.log(phone);
+    // console.log(phone);
 
 
 
@@ -42,7 +42,8 @@ const displayLoadPhone = (phone,isShowAll) => {
                       <h2 class="card-title text-3xl ">${phone.phone_name}</h2>
                       <p class='text-2xl'>There are many variation of passages of available,but the majority have suffered</p>
                       <div className="card-actions justify-end">
-                        <button class="btn btn-primary text-2xl mt-4">Show Details</button>
+                        <button onclick=
+                        "showAllDetails('${phone.slug}')" class="btn btn-primary text-2xl mt-4">Show Details</button>
                       </div>
                     </div>
                   </div>
@@ -82,6 +83,39 @@ const loadingSpinnerFunc =(isLoading)=>{
  const showAll = ()=>{
   searchHandle(true)
  }
-// loadPhone()
 
 
+
+// showAll Details
+
+const showAllDetails = async(id)=>{
+
+  console.log('show all details',id);
+
+  const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
+  const data = await res.json()
+  console.log(data);
+  const phone = data.data
+  showDetailsPhone(phone)
+}
+
+
+// show details phone
+const showDetailsPhone = (phone) =>{
+
+  showDetailModal.showModal()
+
+
+  const showDetailPhoneName = document.getElementById('show-detail-phone-name')
+  showDetailPhoneName.innerText = phone.name
+
+  const showDetailPhone = document.getElementById('show-detail-phone')
+  showDetailPhone.innerHTML = `
+
+  <img src=${phone.image} alt="">
+  <p>${phone.
+    mainFeatures
+    .storage}</p>
+  `
+}
+loadPhone()
