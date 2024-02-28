@@ -1,23 +1,37 @@
 
 const loadPhone = async (searchText) => {
-    const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
-    const data = await res.json()
-    const phones = data.data
-    displayLoadPhone(phones);
+  const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
+  const data = await res.json()
+  const phones = data.data
+  console.log(data.data);
+  displayLoadPhone(phones);
 }
 
 function displayLoadPhone(phone) {
 
-    // step-1 select main container
-    const mainContainerId = document.getElementById('main-container')
-    mainContainerId.textContent = ''
+  // step-1 select main container
+  const mainContainerId = document.getElementById('main-container')
+  mainContainerId.textContent = ''
 
-    phone.forEach(phone => {
-        console.log(phone);
+  const showAllContainer = document.getElementById('show-al-container')
 
-        // step-2 create  a div
-        const createDiv = document.createElement('div')
-        createDiv.innerHTML = `
+  if (phone.length > 12) {
+    showAllContainer.classList.remove('hidden')
+  } else {
+    showAllContainer.classList.add('hidden')
+  }
+
+  phone = phone.slice(0, 12)
+
+
+  phone.forEach(phone => {
+    console.log(phone);
+
+
+
+    // step-2 create  a div
+    const createDiv = document.createElement('div')
+    createDiv.innerHTML = `
         <div class="card shadow-xl">
                     <figure><img class='w-96 card card-base-100' src=${phone.image} alt="Shoes" /></figure>
                     <div class="card-body text-center items-center">
@@ -29,16 +43,19 @@ function displayLoadPhone(phone) {
                     </div>
                   </div>
         `
-        mainContainerId.appendChild(createDiv)
+    mainContainerId.appendChild(createDiv)
 
-    });
+  });
+
+  loadingSpinnerFunc(false)
 }
 
 // search handle
 
-const searchHandle =()=>{
+const searchHandle = () => {
+  loadingSpinnerFunc(true)
   const searchField = document.getElementById('search-field')
- 
+
   const searchFieldValue = searchField.value
   console.log(searchFieldValue);
 
@@ -46,6 +63,19 @@ const searchHandle =()=>{
 
 }
 
-loadPhone()
+
+// loading spinner function
+const loadingSpinnerFunc =(isLoading)=>{
+  const loadingSinner = document.getElementById('loading-spinner')
+  if(isLoading){
+    loadingSinner.classList.remove('hidden')
+  }else{
+    loadingSinner.classList.add('hidden')
+  }
+}
+
+
+ 
+// loadPhone()
 
 
